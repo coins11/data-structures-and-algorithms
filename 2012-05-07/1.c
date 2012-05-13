@@ -72,7 +72,8 @@ void release_expr_p(expr_t **expr)
     release_expr(*expr);
 }
 
-int compare_level(int ctxlevel, fixity_t ctxfixity, int level, fixity_t fixity)
+int compare_level(unsigned int ctxlevel, fixity_t ctxfixity,
+    unsigned int level, fixity_t fixity)
 {
     if(ctxlevel < level) return 1;
     if(ctxlevel == level && ctxfixity == fixity &&
@@ -81,7 +82,8 @@ int compare_level(int ctxlevel, fixity_t ctxfixity, int level, fixity_t fixity)
     return 0;
 }
 
-int ppr_expr(int ctxlevel, fixity_t ctxfixity, expr_t *expr, FILE *output)
+int ppr_infix_expr
+    (unsigned int ctxlevel, fixity_t ctxfixity, expr_t *expr, FILE *output)
 {
     assert(expr);
     switch(expr->exprtype){
@@ -94,21 +96,43 @@ int ppr_expr(int ctxlevel, fixity_t ctxfixity, expr_t *expr, FILE *output)
         assert(expr->right);
         if(compare_level(ctxlevel, ctxfixity,
             expr->op->level, expr->op->fixity)){
-            ppr_expr(expr->op->level,
+            ppr_infix_expr(expr->op->level,
                 expr->op->fixity == LEFTASSOC ? LEFTASSOC : NONASSOC,
                 expr->left, output);
             fputc(' ', output);
             fputc(expr->op->opsymbol, output);
             fputc(' ', output);
-            ppr_expr(expr->op->level,
+            ppr_infix_expr(expr->op->level,
                 expr->op->fixity == RIGHTASSOC ? RIGHTASSOC : NONASSOC,
                 expr->right, output);
         }
         else{
             fputc('(', output);
-            ppr_expr(0, NONASSOC, expr, output);
+            ppr_infix_expr(0, NONASSOC, expr, output);
             fputc(')', output);
         }
+        return 0;
+    default:
+        return -1;
+    }
+}
+
+int ppr_prefix_expr(expr_t *expr, FILE *output)
+{
+    assert(expr);
+    switch(expr->exprtype){
+    case VAREXPR:
+        fputc(expr->variable, output);
+        fputc(' ', output);
+        return 0;
+    case OPEXPR:
+        assert(expr->op);
+        assert(expr->left);
+        assert(expr->right);
+        fputc(expr->op->opsymbol, output);
+        fputc(' ', output);
+        ppr_prefix_expr(expr->left, output);
+        ppr_prefix_expr(expr->right, output);
         return 0;
     default:
         return -1;
@@ -161,7 +185,9 @@ int main(void)
     while(!stack_empty(result)){
         expr_t *expr;
         if(stack_pop(result, &expr) != STACK_SUCCESS) goto ERR;
-        ppr_expr(0, NONASSOC, expr, stdout);
+        ppr_infix_expr(0, NONASSOC, expr, stdout);
+        fputc('\n', stdout);
+        ppr_prefix_expr(expr, stdout);
         fputc('\n', stdout);
         release_expr(expr);
     }
