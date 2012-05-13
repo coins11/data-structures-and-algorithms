@@ -1,4 +1,5 @@
 #include<assert.h>
+#include<ctype.h>
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -109,6 +110,8 @@ int ppr_expr(int ctxlevel, fixity_t ctxfixity, expr_t *expr, FILE *output)
             fputc(')', output);
         }
         return 0;
+    default:
+        return -1;
     }
 }
 
