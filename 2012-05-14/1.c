@@ -146,8 +146,7 @@ int main(void)
         free(graph.m);
         return -1;
     }
-    printf("distance: %d\n", dtable[graph.x-1]);
-    printf("route: ");
+    printf("distance: %d\nroute: ", dtable[graph.x-1]);
     trace_route(route, graph.x-1);
     printf("\n");
     free(graph.m);
