@@ -145,7 +145,7 @@ stack_t *parse_postfix(const operator_t *syntax, FILE *input)
     stack = stack_initialize(sizeof(expr_t *),
         (void (*)(void *))release_expr_p);
     while(1){
-        char ch;
+        int ch;
         expr_t *expr;
         ch = getc(input);
         if(ferror(input)) goto ERR;
