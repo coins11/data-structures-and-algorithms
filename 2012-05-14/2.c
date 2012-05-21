@@ -140,9 +140,13 @@ int main(void)
         return -1;
     }
     for(i = 0; i != graph.x; i++){
-        printf("node %d\n\tdistance: %d\n\troute:", i, dtable[i]);
-        trace_route(route, i);
-        printf("\n");
+        printf("node %d", i);
+        if(dtable[i] < 0) printf(" is unreachable.\n");
+        else{
+            printf("\n\tdistance: %d\n\troute   : ", dtable[i]);
+            trace_route(route, i);
+            printf("\n");
+        }
     }
     free(graph.m);
     free(dtable);

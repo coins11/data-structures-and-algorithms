@@ -86,12 +86,12 @@ int read_matrix(matrix_t *dest, FILE *input)
 }
 
 int dijkstra
-    (matrix_t *graph, size_t start, size_t end, int **dtable_, size_t **route_)
+    (matrix_t *graph, size_t start, size_t goal, int **dtable_, size_t **route_)
 {
     int *dtable, distance;
     char *used;
     size_t size = MIN(graph->x, graph->y), *route, i, j, cur;
-    if(size < start || size < end) return -1;
+    if(size < start || size < goal) return -1;
     dtable = malloc(sizeof(int)*size);
     route = malloc(sizeof(size_t)*size);
     used = malloc(sizeof(char)*size);
@@ -114,17 +114,17 @@ int dijkstra
             free(used);
             return -1;
         }
+        if(cur == goal){
+            free(used);
+            *dtable_ = dtable;
+            *route_ = route;
+            return 0;
+        }
         used[cur] = 1;
         for(j = 0; j != size; j++){
             int nd = ADDDISTANCE(distance, graph->m[cur*(graph->x)+j]);
             if(!used[j] && CMPDISTANCE(nd, dtable[j]))
                 route[j] = cur, dtable[j] = nd;
-        }
-        if(cur == end){
-            free(used);
-            *dtable_ = dtable;
-            *route_ = route;
-            return 0;
         }
     }
 }
@@ -146,9 +146,12 @@ int main(void)
         free(graph.m);
         return -1;
     }
-    printf("distance: %d\nroute: ", dtable[graph.x-1]);
-    trace_route(route, graph.x-1);
-    printf("\n");
+    if(dtable[graph.x-1] < 0) printf("goal is unreachable.\n");
+    else{
+        printf("distance: %d\nroute   : ", dtable[graph.x-1]);
+        trace_route(route, graph.x-1);
+        printf("\n");
+    }
     free(graph.m);
     free(dtable);
     free(route);
