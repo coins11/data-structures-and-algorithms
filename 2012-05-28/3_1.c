@@ -15,9 +15,7 @@ size_t find_substring(const char *s1, const char *s2)
 int main(void)
 {
     char s1[131072], s2[131072];
-    size_t c;
     scanf("%s %s", &s1, &s2);
-    c = find_substring(s1, s2);
-    printf("%d\n", c);
+    printf("%d\n", find_substring(s1, s2));
     return 0;
 }
