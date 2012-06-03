@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+gcc -o 2 -D TESTMODE 2.c
+
+for i in {1..256} ; do
+    for j in {1..256} ; do
+        s1=$(cat /dev/urandom | tr -cd "[:digit:]" | head --bytes=$i)
+        s2=$(cat /dev/urandom | tr -cd "[:digit:]" | head --bytes=$j)
+        (echo $s1 ; echo $s2) | ./2
+    done
+done
