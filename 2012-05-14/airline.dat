@@ -1,0 +1,71 @@
+#include "weight.h"
+#define N 34
+extern Weight w[N][N] = {{0,M,M,M,M,M,M,M,M,M,610,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,0,M,M,M,M,M,M,M,M,526,M,M,625,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,0,M,M,M,336,401,M,511,511,M,M,588,667,667,M,M,M,749,M,M,M,883,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,M,0,M,M,M,M,M,M,424,M,M,M,578,578,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,M,M,0,M,M,M,M,M,280,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,M,M,M,0,M,M,M,M,M,M,M,290,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,336,M,M,M,0,M,M,M,M,M,M,M,395,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,401,M,M,M,M,0,M,M,M,M,M,M,338,M,M,M,M,M,M,M,M,M,M,M,M,M,M,1068,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,0,M,M,M,M,223,M,M,M,M,M,422,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,511,M,M,M,M,M,M,0,M,M,M,181,278,M,M,M,M,M,M,M,M,566,M,M,M,M,M,M,M,M,M,M}, \
+{610,526,511,424,280,M,M,M,M,M,0,176,211,M,278,278,355,M,414,M,509,393,438,566,609,498,568,560,601,984,1018,1157,1228,M}, \
+{M,M,M,M,M,M,M,M,M,M,176,0,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,915,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,211,M,0,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,873,M,M,M,M}, \
+{M,625,588,M,M,290,M,M,223,181,M,M,M,0,M,M,M,M,M,M,M,219,M,386,M,M,M,M,430,832,M,M,M,M}, \
+{M,M,667,578,M,M,395,338,M,278,278,M,M,M,0,M,M,M,M,M,M,M,M,289,332,221,292,294,331,740,M,M,M,M}, \
+{M,M,667,578,M,M,M,M,M,M,278,M,M,M,M,0,M,M,M,M,M,M,M,289,M,M,M,M,M,740,M,907,974,M}, \
+{M,M,M,M,M,M,M,M,M,M,355,M,M,M,M,M,0,M,M,M,M,M,M,M,M,M,M,M,M,690,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,0,M,68,M,M,M,188,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,414,M,M,M,M,M,M,M,0,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,749,M,M,M,M,M,422,M,M,M,M,M,M,M,M,68,M,0,M,76,M,M,M,M,M,196,223,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,509,M,M,M,M,M,M,M,M,M,0,M,M,M,M,M,M,M,M,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,393,M,M,219,M,M,M,M,M,76,M,0,M,187,M,M,M,173,M,622,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,438,M,M,M,M,M,M,M,M,M,M,M,0,M,M,M,M,M,M,607,M,M,M,M}, \
+{M,M,883,M,M,M,M,M,M,566,566,M,M,386,289,289,M,188,M,M,M,187,M,0,M,M,M,M,M,537,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,609,M,M,M,332,M,M,M,M,M,M,M,M,M,0,M,M,M,M,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,498,M,M,M,221,M,M,M,M,M,M,M,M,M,M,0,M,M,M,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,568,M,M,M,292,M,M,M,M,M,M,M,M,M,M,M,0,M,M,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,560,M,M,M,294,M,M,M,M,196,M,173,M,M,M,M,M,0,M,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,601,M,M,430,331,M,M,M,M,223,M,M,M,M,M,M,M,M,0,M,M,M,M,M}, \
+{M,M,M,M,M,M,M,1068,M,M,984,915,873,832,740,740,690,M,M,M,M,622,607,537,M,M,M,M,M,0,59,177,251,M}, \
+{M,M,M,M,M,M,M,M,M,M,1018,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,59,0,M,M,M}, \
+{M,M,M,M,M,M,M,M,M,M,1157,M,M,M,M,907,M,M,M,M,M,M,M,M,M,M,M,M,M,177,M,0,76,M}, \
+{M,M,M,M,M,M,M,M,M,M,1228,M,M,M,M,974,M,M,M,M,M,M,M,M,M,M,M,M,M,251,M,76,0,77}, \
+{M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,M,77,0}};
+extern char *label[N] = { \
+"memanbetsu",	    /* ½÷ËþÊÌ */ \
+"tokachi-obihiro",  /* ¤È¤«¤ÁÂÓ¹­ */ \
+"chitose",	    /* ÀéºÐ */ \
+"hakodate",	    /* È¡´Û */ \
+"akita",	    /* ½©ÅÄ */ \
+"yamagata",	    /* »³·Á */ \
+"sendai",	    /* ÀçÂæ */ \
+"fukushima",	    /* Ê¡Åç */ \
+"niigata",	    /* ¿·³ã */ \
+"narita",	    /* À®ÅÄ */ \
+"haneda",	    /* ±©ÅÄ */ \
+"toyama",	    /* ÉÙ»³ */ \
+"komatsu",	    /* ¾®¾¾ */ \
+"nagoya",	    /* Ì¾¸Å²° */ \
+"itami",	    /* °ËÃ° */ \
+"kansai",	    /* ´ØÀ¾ */ \
+"okayama",	    /* ²¬»³ */ \
+"izumo",	    /* ½Ð±À */ \
+"hiroshima",	    /* ¹­Åç */ \
+"hiroshima-nishi",  /* ¹­ÅçÀ¾ */ \
+"yamaguchi-ube",    /* »³¸ý±§Éô */ \
+"kochi",	    /* ¹âÃÎ */ \
+"matsuyama",	    /* ¾¾»³ */ \
+"fukuoka",	    /* Ê¡²¬ */ \
+"nagasaki",	    /* Ä¹ºê */ \
+"ooita",	    /* ÂçÊ¬ */ \
+"kumamoto",	    /* ·§ËÜ */ \
+"miyazaki",	    /* µÜºê */ \
+"kagoshima",	    /* ¼¯»ùÅç */ \
+"naha",		    /* ÆáÇÆ */ \
+"kumejima",	    /* µ×ÊÆÅç */ \
+"miyako",	    /* µÜ¸Å */ \
+"ishigaki",	    /* ÀÐ³À */
+"yonaguni"	    /* Í¿Æá¹ñ */};
