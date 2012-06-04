@@ -1,0 +1,53 @@
+#!/bin/zsh
+
+gcc -o 3_1 3_1.c
+gcc -o 3_2 3_2.c
+
+for i in {1..100} ; do
+    for j in {1..100} ; do
+        ./geninput1 $i $j | read s1 s2
+        r1=$(echo $s1 $s2 | ./3_1)
+        r2=$(echo $s1 $s2 | ./3_2)
+        echo $(expr length $s1) $(expr length $s2) \
+            $(expr length $s1 \* length $s2) $r1 $r2
+    done
+done > input1
+
+for i in {1..100} ; do
+    for j in {1..100} ; do
+        ./geninput2 $i $j | read s1 s2
+        r1=$(echo $s1 $s2 | ./3_1)
+        r2=$(echo $s1 $s2 | ./3_2)
+        echo $(expr length $s1) $(expr length $s2) \
+            $(expr length $s1 \* length $s2) $r1 $r2
+    done
+done > input2
+
+gnuplot <<EOT
+set terminal eps enhanced
+set output "output.eps"
+set dgrid3d 100 100
+
+set xlabel "length(s_1)"
+set ylabel "length(s_2)"
+set zlabel "count"
+splot "input1" u 1:2:4 with lines ti "simple"
+splot "input1" u 1:2:5 with lines ti "KMP"
+
+set xlabel "length(s_1)"
+set ylabel "count"
+plot "input1" u 1:4 ti "simple"
+plot "input1" u 1:5 ti "KMP"
+
+set xlabel "length(s_1)"
+set ylabel "length(s_2)"
+set zlabel "count"
+splot "input2" u 1:2:4 with lines ti "simple"
+splot "input2" u 1:2:5 with lines ti "KMP"
+
+set xlabel "length(s_1) length(s_2)"
+set ylabel "count"
+plot "input2" u 3:4 ti "simple"
+set xlabel "length(s_1)"
+plot "input2" u 1:5 ti "KMP"
+EOT

@@ -7,9 +7,9 @@ size_t find_substring(const char *s1, const char *s2)
     size_t *next, i, j, c = 0;
     next = alloca(sizeof(size_t)*strlen(s2));
     if(s2[0]){
-        for(i = 0; c++, s2[i]; i++) next[i] = 0;
-        for(i = 1; c++, s2[i]; i++){
-            for(j = 0; c++, s2[j] == s2[i+j]; j++);
+        for(i = 0; s2[i]; i++) next[i] = 0;
+        for(i = 1; s2[i]; i++){
+            for(j = 0; s2[j] == s2[i+j]; j++);
             if(next[i+j] < j+1) next[i+j] = j+1;
         }
     }
