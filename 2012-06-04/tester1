@@ -1,0 +1,12 @@
+#!/bin/zsh
+
+gcc -o 1-1 1-1.c
+
+for i in {0..1024} ; do
+    input=$(cat /dev/urandom | tr -cd "[:digit:]" | fold -w 5 | head -n $i)
+    (echo $i ; echo -n $input) | ./1-1 > tmp1
+    echo -n $input | sort | sed "s/^0*//g ; s/^$/0/g" > tmp2
+    diff tmp1 tmp2
+done
+
+rm tmp*
