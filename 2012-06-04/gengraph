@@ -15,37 +15,37 @@ function genrange-gp(){
     echo ]
 }
 
-#for i in $(genrange $xrange) ; do
-#    input=$(cat /dev/urandom | tr -cd "[:digit:]" | fold -w 5 | head -n $i)
-#    echo $i $input | ./1-2 | read c1 c2
-#    echo $i $c1 $c2
-#done > input1-1
-#
-#for i in $(genrange $xrange) ; do
-#    echo $i $(seq 1 $i) | ./1-2 | read c1 c2
-#    echo $i $c1 $c2
-#done > input1-2
-#
-#for i in $(genrange $xrange) ; do
-#    echo $i $(seq 1 $i | tac) | ./1-2 | read c1 c2
-#    echo $i $c1 $c2
-#done > input1-3
-#
-#for i in $(genrange $xrange) ; do
-#    input=$(cat /dev/urandom | tr -cd "[:digit:]" | fold -w 5 | head -n $i)
-#    echo $i $input | ./2-2 | read c1 c2
-#    echo $i $c1 $c2
-#done > input2-1
-#
-#for i in $(genrange $xrange) ; do
-#    echo $i $(seq 1 $i) | ./2-2 | read c1 c2
-#    echo $i $c1 $c2
-#done > input2-2
-#
-#for i in $(genrange $xrange) ; do
-#    echo $i $(seq 1 $i | tac) | ./2-2 | read c1 c2
-#    echo $i $c1 $c2
-#done > input2-3
+for i in $(genrange $xrange) ; do
+    input=$(cat /dev/urandom | tr -cd "[:digit:]" | fold -w 5 | head -n $i)
+    echo $i $input | ./1-2 | read c1 c2
+    echo $i $c1 $c2
+done > input1-1
+
+for i in $(genrange $xrange) ; do
+    echo $i $(seq 1 $i) | ./1-2 | read c1 c2
+    echo $i $c1 $c2
+done > input1-2
+
+for i in $(genrange $xrange) ; do
+    echo $i $(seq 1 $i | tac) | ./1-2 | read c1 c2
+    echo $i $c1 $c2
+done > input1-3
+
+for i in $(genrange $xrange) ; do
+    input=$(cat /dev/urandom | tr -cd "[:digit:]" | fold -w 5 | head -n $i)
+    echo $i $input | ./2-2 | read c1 c2
+    echo $i $c1 $c2
+done > input2-1
+
+for i in $(genrange $xrange) ; do
+    echo $i $(seq 1 $i) | ./2-2 | read c1 c2
+    echo $i $c1 $c2
+done > input2-2
+
+for i in $(genrange $xrange) ; do
+    echo $i $(seq 1 $i | tac) | ./2-2 | read c1 c2
+    echo $i $c1 $c2
+done > input2-3
 
 gnuplot <<EOT
 set terminal eps enhanced size 10in, 6in
